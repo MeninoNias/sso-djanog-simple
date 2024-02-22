@@ -124,7 +124,7 @@ class IdentityProvider(BaseModel):
             url,
             json=data,
             auth=(self.app_id, self.api_key),
-            timeout=5
+            timeout=10
         )
 
     def __str__(self):

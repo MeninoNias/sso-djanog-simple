@@ -1,0 +1,48 @@
+config:
+  environments:
+    local: 
+      target: http://127.0.0.1:8000
+#      http:
+#        extendedMetrics: true
+      phases:
+#        - duration: 30
+#          arrivalRate: 1
+#          name: TESTE 001
+        - duration: 120
+          arrivalRate: 1
+          name: TESTE DE DISPONIBILIDADE 001
+      payload:
+        # path is relative to the location of the test script
+        path: "users.csv"
+        fields:
+          - "username"
+          - "password"
+        order: sequence
+        skipHeader: true
+        name: auth # refer to the data as "auth"
+  plugins:
+#      ensure: {}
+#      apdex: {}
+#      metrics-by-endpoint: {}
+      metrics-by-endpoint:
+        useOnlyRequestNames: true
+#  apdex:
+#    threshold: 100
+#  ensure:
+#      thresholds:
+#        - http.response_time.p99: 100
+#        - http.response_time.p95: 75
+        
+scenarios:
+  - name: 'TESTE'
+    flow:
+      - loop:
+        - post:
+            url: "/sso/api/v1/login/"
+            json:
+              email: "{{ username }}"
+              password: "{{ password }}"
+            auth:
+              user: "8d465d27-6eb3-4ac1-8bac-807e0075e5fe"
+              pass: "44426fb2-d386-4c93-aa25-a77b6542cd6e"
+        over: auth
