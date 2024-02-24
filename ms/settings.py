@@ -9,8 +9,15 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
+import os
 
+from dotenv import load_dotenv
+from ms import get_env, get_env_flag
 from pathlib import Path
+
+dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
+load_dotenv(dotenv_path)
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -75,11 +82,33 @@ WSGI_APPLICATION = 'ms.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
+# Database
+_db_host = get_env("DATABASE_HOST", default='teste')
+_db_name = get_env('DATABASE_NAME', default='nias')
+_db_user = get_env('DATABASE_USER', default='mysql')
+_db_pass = get_env('DATABASE_PASS', default='mysql')
+_db_port = get_env('DATABASE_PORT', default='3306')
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': _db_name,
+        'USER': _db_user,
+        'PASSWORD': _db_pass,
+        'HOST': _db_host,
+        'PORT': _db_port,
+        'OPTIONS': {
+            'sql_mode': 'traditional',
+            'charset': 'utf8mb4',
+        }
+    },
 }
 
 # Password validation
@@ -122,5 +151,5 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # SSO
-SSO_CLIENT_APP_ID = '8d465d27-6eb3-4ac1-8bac-807e0075e5fe'
-SSO_CLIENT_API_KEY = '44426fb2-d386-4c93-aa25-a77b6542cd6e'
+SSO_CLIENT_APP_ID = '543b9591-70ae-49a2-8cd9-97ee84da9e71'
+SSO_CLIENT_API_KEY = '82c9be79-3752-484e-a5dd-fe4247942c5a'
