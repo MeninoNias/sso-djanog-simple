@@ -98,7 +98,7 @@ _db_port = get_env('DATABASE_PORT', default='3306')
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': _db_name,
         'USER': _db_user,
         'PASSWORD': _db_pass,
