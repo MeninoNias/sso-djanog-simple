@@ -104,10 +104,6 @@ DATABASES = {
         'PASSWORD': _db_pass,
         'HOST': _db_host,
         'PORT': _db_port,
-        'OPTIONS': {
-            'sql_mode': 'traditional',
-            'charset': 'utf8mb4',
-        }
     },
 }
 
